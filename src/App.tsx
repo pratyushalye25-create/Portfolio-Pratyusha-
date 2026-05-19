@@ -250,6 +250,25 @@ const LiveProjectButton = ({ url }: { url?: string }) => (
   </button>
 );
 
+const WordReveal: React.FC<{ text: string; className?: string; delay?: number; stagger?: number }> = ({ text, className = '', delay = 0, stagger = 0.1 }) => {
+  const words = text.split(' ');
+  return (
+    <div className={`${className} flex flex-wrap justify-center gap-x-4 gap-y-2`}>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: delay + i * stagger, duration: 0.4, ease: "easeOut" }}
+          className="inline-block"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </div>
+  );
+};
+
 // --- SECTIONS ---
 
 const Hero = () => {
@@ -264,10 +283,8 @@ const Hero = () => {
     }
   };
 
-  const latestProjectUrl = PROJECTS_DATA.find(p => p.link)?.link;
-
   return (
-    <section className="relative h-screen flex flex-col overflow-hidden">
+    <section className="relative min-h-screen flex flex-col overflow-hidden">
       <nav className="flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8 z-50">
         <FadeIn delay={0} y={-20}>
           <div className="flex gap-4 md:gap-8">
@@ -283,76 +300,81 @@ const Hero = () => {
         </FadeIn>
       </nav>
 
-      <div className="flex-1 flex flex-col justify-start items-center text-center pt-8 sm:pt-6 md:pt-4 lg:pt-2 z-0">
-        <div className="overflow-hidden w-full px-4">
+      <div className="flex-1 flex flex-col items-center justify-center z-10 pt-4 sm:pt-8 pb-32">
+        {/* Title Section */}
+        <div className="w-full px-4 text-center mb-6 sm:mb-10">
           <FadeIn delay={0.15} y={40} className="w-full">
-            <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap text-[62.3253px] opacity-80">
+            <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.85] text-[clamp(2.2rem,11.5vw,7.5rem)] opacity-80 break-words max-w-5xl mx-auto">
               Hi, i&apos;m pratyusha
             </h1>
           </FadeIn>
         </div>
-      </div>
 
-      <div className="absolute inset-x-0 bottom-0 top-0 flex items-center justify-center pt-20">
-        <FadeIn delay={0.6} y={30} className="relative cursor-pointer z-30" as="div">
-          <AnimatePresence>
-            {interaction === 'hi' && (
+        {/* Avatar Section */}
+        <div className="relative flex flex-col items-center">
+          <FadeIn delay={0.6} y={30} className="relative cursor-pointer mb-10" as="div">
+            <AnimatePresence>
+              {interaction === 'hi' && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 20, x: 80 }}
+                  animate={{ opacity: 1, scale: 1.2, y: -100, x: 120 }}
+                  exit={{ opacity: 0, scale: 0.5, y: -150 }}
+                  className="absolute z-40 bg-white text-brand-dark px-6 py-2 rounded-2xl rounded-bl-none font-black uppercase tracking-tighter text-2xl shadow-2xl pointer-events-none"
+                >
+                  Hi! 👋
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <Magnet padding={200} strength={6} className="relative z-30">
               <motion.div
-                initial={{ opacity: 0, scale: 0.5, y: 20, x: 80 }}
-                animate={{ opacity: 1, scale: 1.2, y: -100, x: 120 }}
-                exit={{ opacity: 0, scale: 0.5, y: -150 }}
-                className="absolute z-40 bg-white text-brand-dark px-6 py-2 rounded-2xl rounded-bl-none font-black uppercase tracking-tighter text-2xl shadow-2xl pointer-events-none"
+                onClick={handleInteraction}
+                className="w-[240px] xs:w-[280px] sm:w-[320px] md:w-[380px] lg:w-[420px] relative group perspective-1000"
+                animate={
+                  interaction === 'hi' 
+                    ? { y: [0, -30, 0], rotateY: 360 } 
+                    : { y: 0, scale: 1.1, rotateY: 0 }
+                }
+                transition={{
+                  duration: 0.8,
+                  ease: "easeInOut",
+                }}
+                whileHover={{ scale: 1.15, rotateY: 15 }}
+                whileTap={{ scale: 0.9, rotateY: -15 }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
-                Hi! 👋
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <Magnet padding={200} strength={6} className="relative z-30">
-            <motion.div
-              onClick={handleInteraction}
-              className="w-[280px] sm:w-[320px] md:w-[380px] lg:w-[420px] relative group perspective-1000"
-              animate={
-                interaction === 'hi' 
-                  ? { y: [0, -30, 0], rotateY: 360 } 
-                  : { y: 0, scale: 1.1, rotateY: 0 }
-              }
-              transition={{
-                duration: 0.8,
-                ease: "easeInOut",
-              }}
-              whileHover={{ scale: 1.15, rotateY: 15 }}
-              whileTap={{ scale: 0.9, rotateY: -15 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              {/* Circular Mask to simulate background removal for the 3D-ish look */}
-              <div className="relative w-full aspect-square rounded-full overflow-hidden border-4 border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.3)] bg-gradient-to-b from-white/10 to-transparent">
-                <img
-                  src={heroImage}
-                  alt="Pratyusha Avatar"
-                  className="w-full h-full object-cover object-top scale-110 group-hover:scale-125 transition-transform duration-500"
+                <div className="relative w-full aspect-square rounded-full overflow-hidden border-4 border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.3)] bg-gradient-to-b from-white/10 to-transparent">
+                  <img
+                    src={heroImage}
+                    alt="Pratyusha Avatar"
+                    className="w-full h-full object-cover object-top scale-110 group-hover:scale-125 transition-transform duration-500"
+                  />
+                </div>
+                
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-[-20px] border-2 border-dashed border-white/10 rounded-full pointer-events-none"
                 />
-              </div>
-              
-              {/* Decorative 3D Ring */}
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-20px] border-2 border-dashed border-white/10 rounded-full pointer-events-none"
-              />
-            </motion.div>
-          </Magnet>
-        </FadeIn>
+              </motion.div>
+            </Magnet>
+          </FadeIn>
+
+          {/* Description Section BELOW Avatar */}
+          <div className="max-w-[320px] sm:max-w-xl md:max-w-3xl text-center px-4">
+            <WordReveal 
+              delay={1.2}
+              stagger={0.4}
+              text="a bca student driven by crafting striking and unforgettable projects"
+              className="text-brand-light font-light uppercase leading-relaxed text-lg sm:text-xl md:text-[25px]"
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="flex justify-between items-end px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 z-20">
-        <FadeIn delay={0.35} y={20}>
-          <p className="text-brand-light font-light uppercase tracking-wide leading-snug text-[20px] max-w-[160px] sm:max-w-[220px] md:max-w-[260px]">
-            a bca student driven by crafting striking and unforgettable projects
-          </p>
-        </FadeIn>
-        <FadeIn delay={0.5} y={20} className="flex flex-col sm:flex-row gap-4 items-center sm:items-end">
-          <LiveProjectButton url={latestProjectUrl} />
+      {/* Footer info & Buttons */}
+      <div className="absolute bottom-8 right-6 md:right-10 z-20">
+        <FadeIn delay={1.5} y={20}>
           <ContactButton />
         </FadeIn>
       </div>
