@@ -329,7 +329,7 @@ const Hero = () => {
             <Magnet padding={200} strength={6} className="relative z-30">
               <motion.div
                 onClick={handleInteraction}
-                className="w-[240px] xs:w-[280px] sm:w-[320px] md:w-[380px] lg:w-[420px] relative group perspective-1000"
+                className="w-[190px] xs:w-[220px] sm:w-[260px] md:w-[300px] lg:w-[340px] relative group perspective-1000"
                 animate={
                   interaction === 'hi' 
                     ? { y: [0, -30, 0], rotateY: 360 } 
