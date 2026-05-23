@@ -104,7 +104,7 @@ const PROJECTS_DATA = [
     img1: 'https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif',
     img2: 'https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif',
     img3: 'https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif',
-    link: 'https://mirror-six-brown.vercel.app/',
+    link: 'https://mirror-pgvl.vercel.app',
     desc: 'Teaching Generative AI and building professional-grade AI applications.'
   },
 ];
