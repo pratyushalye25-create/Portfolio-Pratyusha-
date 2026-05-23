@@ -238,15 +238,15 @@ const ContactButton = () => (
   </button>
 );
 
-const LiveProjectButton = ({ url }: { url?: string }) => (
+const LiveProjectButton = ({ url, className = '' }: { url?: string; className?: string }) => (
   <button 
     onClick={() => url && window.open(url, '_blank')}
-    className="live-btn border-2 border-brand-light transition-all duration-300 hover:bg-brand-light/10 text-brand-light rounded-full px-8 py-3 sm:px-10 sm:py-3.5 group flex items-center gap-2"
+    className={`live-btn border-2 border-brand-light transition-all duration-300 hover:bg-brand-light/10 text-brand-light rounded-full px-5 py-2 sm:px-8 sm:py-3 group flex items-center justify-center gap-1.5 sm:gap-2 shrink-0 ${className}`}
   >
-    <span className="font-medium uppercase tracking-widest text-sm sm:text-base">
+    <span className="font-medium uppercase tracking-widest text-[11px] sm:text-xs md:text-sm">
       Live Project
     </span>
-    <MoveUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+    <MoveUpRight className="w-3.5 h-3.5 sm:w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
   </button>
 );
 
@@ -513,37 +513,37 @@ const ProjectCard = ({ project, i, total }: any) => {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1 - (total - 1 - i) * 0.03]);
 
   return (
-    <div className="relative h-[85vh] sticky top-24 md:top-32 w-full flex items-center justify-center">
+    <div className="relative h-[65vh] xs:h-[70vh] sm:h-[76vh] md:h-[80vh] sticky top-16 xs:top-20 sm:top-24 md:top-28 w-full flex items-center justify-center">
       <motion.div
         ref={container}
-        style={{ scale, top: `${i * 28}px` }}
-        className="w-full bg-brand-dark border-2 border-brand-light rounded-[40px] sm:rounded-[60px] p-4 sm:p-8 flex flex-col gap-6"
+        style={{ scale, top: `${i * 12}px` }}
+        className="w-full h-full bg-brand-dark border-2 border-brand-light rounded-[30px] sm:rounded-[40px] md:rounded-[50px] p-4 sm:p-6 md:p-8 flex flex-col gap-4 sm:gap-6"
       >
-        <div className="flex justify-between items-end overflow-hidden px-2">
+        <div className="flex justify-between items-end overflow-hidden px-1 sm:px-2 shrink-0">
           <div className="flex items-end gap-3 sm:gap-6">
-            <span className="font-black text-[clamp(3rem,10vw,140px)] leading-none translate-y-2">{project.num}</span>
-            <div className="flex flex-col pb-2">
-              <span className="text-brand-light uppercase tracking-widest text-[clamp(0.6rem,1.2vw,0.9rem)] opacity-60 font-light mb-1">{project.category}</span>
+            <span className="font-black text-[clamp(2.5rem,8vw,100px)] leading-none translate-y-1 sm:translate-y-2">{project.num}</span>
+            <div className="flex flex-col pb-1 sm:pb-2">
+              <span className="text-brand-light uppercase tracking-widest text-[clamp(0.55rem,1vw,0.85rem)] opacity-60 font-light mb-0.5 sm:mb-1">{project.category}</span>
               <div className="flex items-center gap-3">
-                <h3 className="text-brand-light uppercase font-semibold text-[clamp(1rem,2vw,2rem)]">{project.name}</h3>
+                <h3 className="text-brand-light uppercase font-semibold text-[clamp(0.95rem,2vw,1.9rem)] leading-tight">{project.name}</h3>
                 {project.link && (
                   <button 
                     onClick={() => window.open(project.link, '_blank')}
-                    className="sm:hidden bg-brand-light text-brand-dark px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-tighter hover:scale-105 transition-transform"
+                    className="sm:hidden bg-brand-light text-brand-dark px-2.5 py-0.5 rounded-full text-[9px] uppercase font-bold tracking-tighter hover:scale-105 transition-transform"
                   >
-                    Live Project
+                    Live
                   </button>
                 )}
               </div>
-              <p className="text-brand-light/50 text-[10px] sm:text-xs max-w-[200px] sm:max-w-xs leading-tight hidden xs:block">{project.desc}</p>
+              <p className="text-brand-light/50 text-[10px] sm:text-xs max-w-[180px] sm:max-w-xs leading-tight hidden xs:block">{project.desc}</p>
             </div>
           </div>
-          <div className="pb-4">
+          <div className="pb-1 sm:pb-3 shrink-0">
             {project.link ? (
               <LiveProjectButton url={project.link} />
             ) : (
-              <button disabled className="opacity-30 cursor-not-allowed border-2 border-brand-light/50 text-brand-light/50 rounded-full px-8 py-3 sm:px-10 sm:py-3.5 flex items-center gap-2">
-                <span className="font-medium uppercase tracking-widest text-sm sm:text-base">Coming Soon</span>
+              <button disabled className="opacity-30 cursor-not-allowed border-2 border-brand-light/50 text-brand-light/50 rounded-full px-5 py-2 sm:px-8 sm:py-3 flex items-center gap-1.5 sm:gap-2">
+                <span className="font-medium uppercase tracking-widest text-[11px] sm:text-xs md:text-sm">Coming Soon</span>
               </button>
             )}
           </div>
@@ -551,14 +551,14 @@ const ProjectCard = ({ project, i, total }: any) => {
 
         <div className="flex gap-3 sm:gap-6 flex-1 h-full min-h-0">
           <div className="w-[40%] flex flex-col gap-3 sm:gap-6">
-             <div className="h-[45%] rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden">
-               <img src={project.img1} alt="p1" className="w-full h-full object-cover transition-transform hover:scale-105 duration-700" />
+             <div className="h-[45%] rounded-[20px] sm:rounded-[30px] overflow-hidden">
+                <img src={project.img1} alt="p1" className="w-full h-full object-cover transition-transform hover:scale-105 duration-700" />
              </div>
-             <div className="h-[55%] rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden">
-               <img src={project.img2} alt="p2" className="w-full h-full object-cover transition-transform hover:scale-105 duration-700" />
+             <div className="h-[55%] rounded-[20px] sm:rounded-[30px] overflow-hidden">
+                <img src={project.img2} alt="p2" className="w-full h-full object-cover transition-transform hover:scale-105 duration-700" />
              </div>
           </div>
-          <div className="w-[60%] rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden">
+          <div className="w-[60%] rounded-[20px] sm:rounded-[30px] overflow-hidden">
             <img src={project.img3} alt="p3" className="w-full h-full object-cover transition-transform hover:scale-105 duration-700" />
           </div>
         </div>
@@ -570,10 +570,14 @@ const ProjectCard = ({ project, i, total }: any) => {
 const Projects = () => {
   return (
     <section id="projects" className="bg-brand-dark rounded-t-[40px] sm:rounded-t-[60px] -mt-10 sm:-mt-14 z-10 relative pt-20 px-5 sm:px-10">
-      <FadeIn className="mb-20">
-        <h2 className="hero-heading font-black uppercase text-center text-[clamp(3rem,12vw,160px)]">Project</h2>
-      </FadeIn>
-      <div className="flex flex-col gap-12 max-w-6xl mx-auto pb-40">
+      <div className="flex flex-col items-center justify-center py-16 sm:py-24">
+        <FadeIn>
+          <h2 className="hero-heading font-black uppercase text-center text-[clamp(2.5rem,10vw,8.5rem)] tracking-widest leading-none">
+            Projects
+          </h2>
+        </FadeIn>
+      </div>
+      <div className="flex flex-col gap-12 max-w-6xl mx-auto pb-44">
         {PROJECTS_DATA.map((p, i) => (
           <ProjectCard key={i} project={p} i={i} total={PROJECTS_DATA.length} />
         ))}
