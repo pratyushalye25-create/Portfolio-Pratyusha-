@@ -303,8 +303,8 @@ const Hero = () => {
       <div className="flex-1 flex flex-col items-center justify-center z-10 pt-4 sm:pt-8 pb-32">
         {/* Title Section */}
         <div className="w-full px-4 text-center mb-6 sm:mb-10">
-          <FadeIn delay={0.15} y={40} className="w-full">
-            <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.85] text-[clamp(2.2rem,11.5vw,7.5rem)] opacity-80 break-words max-w-5xl mx-auto">
+          <FadeIn delay={0.15} y={40} className="w-full flex justify-center">
+            <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.85] text-[clamp(1.8rem,8.5vw,5.5rem)] opacity-80 break-words max-w-4xl mx-auto text-center">
               Hi, i&apos;m pratyusha
             </h1>
           </FadeIn>
